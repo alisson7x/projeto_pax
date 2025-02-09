@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "projeto-pax"
+version = "0.1.0"
+description = ""
+authors = ["Alisson Araujo de Sousa <alissonaraujo20042018@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+streamlit = "^1.42.0"
+streamlit-modal = "^0.1.2"
+pyperclip = "^1.9.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
