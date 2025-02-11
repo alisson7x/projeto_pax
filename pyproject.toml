@@ -10,6 +10,10 @@ python = "^3.12"
 streamlit = "^1.42.0"
 streamlit-modal = "^0.1.2"
 pyperclip = "^1.9.0"
+streamlit-clipboard = "^0.0.6"
+pywhatkit = "^5.4"
+datetime = "^5.5"
+firebase-admin = "^6.6.0"
 
 
 [build-system]

@@ -1,9 +1,32 @@
 import streamlit as st
 from streamlit_modal import Modal
+from datetime import datetime
+import firebase_admin
+from firebase_admin import credentials, firestore
+import toml
+import os
+
+# Caminho para o arquivo secrets.toml na pasta gitignore
+secrets_path = os.path.join(".streamlit", "secrets.toml")
+
+# Carregar variáveis do arquivo secrets.toml
+secrets = toml.load(secrets_path)
+
+# Inicializar o Firebase (se ainda não estiver inicializado)
+if not firebase_admin._apps:
+    cred = credentials.Certificate(secrets["firebase"])
+    firebase_admin.initialize_app(cred)
+
+# Acessar o banco de dados Firestore
+db = firestore.client()
 
 # Configuração da página
-st.set_page_config(page_title="Notas Funerária", layout="centered")
-st.header("Dados Funerária")
+st.set_page_config(page_title="Funerária Pax Regional",
+                   page_icon="img_pax.png",
+                   layout="centered")
+st.image("img_pax.png")
+st.title("Insira os dados corretamente!")
+st.warning("Todos os campos devem ser preenchidos!")
 
 # Entrada de dados
 nome = st.text_input("Nome completo do falecido:")
@@ -35,29 +58,33 @@ texto_nota = f"""
 Rogamos a Deus que conforte o coração de familiares e amigos neste momento de dor. 🖤🙏
 """
 
+# Função para salvar dados no Firestore
+def salvar_dados(nome, apelido, dt_nasc, dt_falec, horario_falec, end_sepultamento, horario_sepult, velorio, local_velorio=None):
+    dados = {
+        "nome": nome,
+        "apelido": apelido,
+        "data_nascimento": dt_nasc.strftime("%d/%m/%Y"),
+        "data_falecimento": dt_falec.strftime("%d/%m/%Y"),
+        "horario_falecimento": horario_falec.strftime("%H:%M"),
+        "endereco_sepultamento": end_sepultamento,
+        "horario_sepultamento": horario_sepult.strftime("%H:%M"),
+        "local_velorio": velorio if velorio != "Outro" else local_velorio,
+        "timestamp": datetime.now(),
+    }
+
+    db.collection("funeraria").add(dados)
+    st.success("Dados salvos com sucesso!")
+
 # Botão de confirmação
 btn_confirmar = st.button("Confirmar")
 
 if btn_confirmar:
+    # Salvar os dados no Firestore
+    salvar_dados(nome, apelido, dt_nasc, dt_falec, horario_falec, end_sepultamento, horario_sepult, velorio or local_velorio)
+    
     # Exibe o modal com os dados confirmados
-    modal = Modal("Dados confirmados", key="PopUp")
+    modal = Modal("Dados confirmados!", key="PopUp")
+    
     with modal.container():
-        st.title("Nota de Falecimento")
-        st.write(texto_nota)
-
-        # Botão para copiar a nota de falecimento usando JavaScript
-        st.markdown(
-            f"""
-            <textarea id="textoNota" style="display:none;">{texto_nota}</textarea>
-            <button onclick="copiarTexto()">Copiar nota de falecimento</button>
-            <script>
-                function copiarTexto() {{
-                    var texto = document.getElementById("textoNota");
-                    texto.select();
-                    document.execCommand('copy');
-                    alert('Nota de falecimento copiada para a área de transferência!');
-                }}
-            </script>
-            """,
-            unsafe_allow_html=True
-        )
+        st.markdown(texto_nota)
+        st.success("Dados enviados para a equipe PAX✅")
