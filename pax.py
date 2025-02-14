@@ -73,10 +73,9 @@ if dt_nasc_valida and dt_falec_valida and nome and apelido and end_sepultamento 
     st.markdown("### Nota de Falecimento Gerada:")
     st.code(texto_nota, language="markdown")
 
-def copiar_texto(texto_nota):
+if st.button("Copiar Nota"):
     pyperclip.copy(texto_nota)
     st.success("Nota copiada para a área de transferência")
 # Botão de copiar dentro da seção de exibição do texto
-if st.button("Copiar Nota"):
-    copiar_texto(texto_nota)
+
     
