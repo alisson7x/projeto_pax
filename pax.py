@@ -1,24 +1,6 @@
 import streamlit as st
 from datetime import datetime
-import firebase_admin
-from firebase_admin import credentials, firestore
-import toml
-import os
 import pyperclip
-
-# Caminho para o arquivo secrets.toml na pasta gitignore
-secrets_path = os.path.join("streamlit", "secrets.toml")
-
-# Carregar variáveis do arquivo secrets.toml
-secrets = toml.load(secrets_path)
-
-# Inicializar o Firebase (se ainda não estiver inicializado)
-if not firebase_admin._apps:
-    cred = credentials.Certificate(secrets["firebase"])
-    firebase_admin.initialize_app(cred)
-
-# Acessar o banco de dados Firestore
-db = firestore.client()
 
 # Configuração da página
 st.set_page_config(page_title="Funerária Pax Regional",
@@ -67,31 +49,8 @@ else:
     if not dt_falec_valida:
         st.error("Data de falecimento inválida. Use o formato DD/MM/YYYY.")
 
-# Função para salvar dados no Firestore
-def salvar_dados(nome, apelido, dt_nasc, dt_falec, horario_falec, end_sepultamento, horario_sepult, velorio, local_velorio=None):
-    dados = {
-        "nome": nome,
-        "apelido": apelido,
-        "data_nascimento": dt_nasc.strftime("%d/%m/%Y"),
-        "data_falecimento": dt_falec.strftime("%d/%m/%Y"),
-        "horario_falecimento": horario_falec.strftime("%H:%M"),
-        "endereco_sepultamento": end_sepultamento,
-        "horario_sepultamento": horario_sepult.strftime("%H:%M"),
-        "local_velorio": velorio if velorio != "outro..." else local_velorio,
-        "timestamp": datetime.now(),
-    }
-
-    db.collection("funeraria").add(dados)
-    st.success("Dados salvos com sucesso!")
-
 # Botão de confirmação
 btn_confirmar = st.button("Confirmar")
-
-if btn_confirmar:
-    if dt_nasc_valida and dt_falec_valida and nome and apelido and end_sepultamento:
-        salvar_dados(nome, apelido, dt_nasc, dt_falec, horario_falec, end_sepultamento, horario_sepult, velorio, local_velorio)
-    else:
-        st.error("Por favor, preencha todos os campos obrigatórios corretamente!")
 
 # Geração do texto
 if dt_nasc_valida and dt_falec_valida and nome and apelido and end_sepultamento and btn_confirmar:
@@ -114,8 +73,10 @@ Rogamos a Deus que conforte o coração de familiares e amigos neste momento de 
     st.markdown("### Nota de Falecimento Gerada:")
     st.code(texto_nota, language="markdown")
 
+    def copiar_texto(texto_nota):
+        pyperclip.copy(texto_nota)
+        st.success("Nota copiada para a área de transferência")
+
     # Botão de copiar dentro da seção de exibição do texto
     if st.button("Copiar Nota"):
-        pyperclip.copy(texto_nota)
-        st.success("Nota copiada para área de transferência")
-
+        copiar_texto(texto_nota)
