@@ -73,17 +73,16 @@ if (
     # Exibição da nota
     if st.button("Confirmar"):
         st.markdown("### Nota de Falecimento Gerada:")
-        st.text_area("Copie a nota abaixo:", texto_nota, height=250)
+        st.divider()
+        st.write(texto_nota)
         st.success("Nota gerada com sucesso!")
         
         # Botão para copiar o texto para a área de transferência
-        if st.button("Copiar Nota"):
-            try:
-                pyperclip.copy(texto_nota)
-                st.success("Nota copiada para a área de transferência!")
-            except pyperclip.PyperclipException:
-                st.error("A cópia automática não está disponível neste ambiente. Copie o texto manualmente.")
+    if st.button("Copiar Nota"):
+            pyperclip.copy(texto_nota)
+            st.success("Nota copiada para a área de transferência!")
+           
 else:
     st.warning("Preencha todos os campos obrigatórios e valide os dados antes de gerar a nota.")
 
-    
+        
