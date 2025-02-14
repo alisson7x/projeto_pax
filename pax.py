@@ -49,12 +49,7 @@ else:
     if not dt_falec_valida:
         st.error("Data de falecimento inválida. Use o formato DD/MM/YYYY.")
 
-# Botão de confirmação
-btn_confirmar = st.button("Confirmar")
-
-# Geração do texto
-if dt_nasc_valida and dt_falec_valida and nome and apelido and end_sepultamento and btn_confirmar:
-    texto_nota = f"""
+texto_nota = f"""
 🕊️ Nota de Falecimento 🕊️
 
 É com profundo pesar que comunicamos o falecimento de {nome}, carinhosamente conhecido como {apelido}.\n
@@ -69,14 +64,19 @@ if dt_nasc_valida and dt_falec_valida and nome and apelido and end_sepultamento 
 Rogamos a Deus que conforte o coração de familiares e amigos neste momento de dor. 🖤🙏\n
     """
 
+# Botão de confirmação
+btn_confirmar = st.button("Confirmar")
+
+# Geração do texto
+if dt_nasc_valida and dt_falec_valida and nome and apelido and end_sepultamento and btn_confirmar:
     # Exibição do texto da nota
     st.markdown("### Nota de Falecimento Gerada:")
     st.code(texto_nota, language="markdown")
 
-    def copiar_texto(texto_nota):
-        pyperclip.copy(texto_nota)
-        st.success("Nota copiada para a área de transferência")
-
-    # Botão de copiar dentro da seção de exibição do texto
-    if st.button("Copiar Nota"):
-        copiar_texto(texto_nota)
+def copiar_texto(texto_nota):
+    pyperclip.copy(texto_nota)
+    st.success("Nota copiada para a área de transferência")
+# Botão de copiar dentro da seção de exibição do texto
+if st.button("Copiar Nota"):
+    copiar_texto(texto_nota)
+    
