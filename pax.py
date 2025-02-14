@@ -3,10 +3,11 @@ from datetime import datetime
 import pyperclip
 
 # Configuração da página
-st.set_page_config(page_title="Funerária Pax Regional",
-                   page_icon="img_pax.png",
-                   layout="wide"
-                   )
+st.set_page_config(
+    page_title="Funerária Pax Regional",
+    page_icon="img_pax.png",
+    layout="wide"
+)
 st.image("img_pax.png", width=333)
 st.title("Insira os dados corretamente!")
 st.info("Todos os campos devem ser preenchidos!")
@@ -49,33 +50,40 @@ else:
     if not dt_falec_valida:
         st.error("Data de falecimento inválida. Use o formato DD/MM/YYYY.")
 
-texto_nota = f"""
-🕊️ Nota de Falecimento 🕊️
+# Apenas gerar texto se todos os dados estiverem válidos
+if (
+    dt_nasc_valida and dt_falec_valida
+    and nome and apelido and end_sepultamento
+):
+    texto_nota = f"""
+    🕊️ Nota de Falecimento 🕊️
 
-É com profundo pesar que comunicamos o falecimento de {nome}, carinhosamente conhecido como {apelido}.\n
+    É com profundo pesar que comunicamos o falecimento de {nome}, carinhosamente conhecido como {apelido}.\n
 
-✝️ Horário do Falecimento: {horario_falec.strftime('%H:%M')}\n
-📆 Data de Nascimento: {dt_nasc.strftime('%d/%m/%Y')}\n
-📆 Data de Falecimento: {dt_falec.strftime('%d/%m/%Y')}\n
-🏡 Velório: {local_velorio}\n
-⚰️ Sepultamento: {end_sepultamento}\n
-⏰ Horário do Sepultamento: {horario_sepult.strftime('%H:%M')}\n
+    ✝️ Horário do Falecimento: {horario_falec.strftime('%H:%M')}\n
+    📆 Data de Nascimento: {dt_nasc.strftime('%d/%m/%Y')}\n
+    📆 Data de Falecimento: {dt_falec.strftime('%d/%m/%Y')}\n
+    🏡 Velório: {local_velorio}\n
+    ⚰️ Sepultamento: {end_sepultamento}\n
+    ⏰ Horário do Sepultamento: {horario_sepult.strftime('%H:%M')}\n
 
-Rogamos a Deus que conforte o coração de familiares e amigos neste momento de dor. 🖤🙏\n
+    Rogamos a Deus que conforte o coração de familiares e amigos neste momento de dor. 🖤🙏
     """
-
-# Botão de confirmação
-btn_confirmar = st.button("Confirmar")
-
-# Geração do texto
-if dt_nasc_valida and dt_falec_valida and nome and apelido and end_sepultamento and btn_confirmar:
-    # Exibição do texto da nota
-    st.markdown("### Nota de Falecimento Gerada:")
-    st.code(texto_nota, language="markdown")
-
-if st.button("Copiar Nota"):
-    pyperclip.copy(texto_nota)
-    st.success("Nota copiada para a área de transferência")
-# Botão de copiar dentro da seção de exibição do texto
+    
+    # Exibição da nota
+    if st.button("Confirmar"):
+        st.markdown("### Nota de Falecimento Gerada:")
+        st.text_area("Copie a nota abaixo:", texto_nota, height=250)
+        st.success("Nota gerada com sucesso!")
+        
+        # Botão para copiar o texto para a área de transferência
+        if st.button("Copiar Nota"):
+            try:
+                pyperclip.copy(texto_nota)
+                st.success("Nota copiada para a área de transferência!")
+            except pyperclip.PyperclipException:
+                st.error("A cópia automática não está disponível neste ambiente. Copie o texto manualmente.")
+else:
+    st.warning("Preencha todos os campos obrigatórios e valide os dados antes de gerar a nota.")
 
     
