@@ -79,8 +79,8 @@ if (
         
         # Botão para copiar o texto para a área de transferência
     if st.button("Copiar Nota"):
-            pyperclip.copy(texto_nota)
-            st.success("Nota copiada para a área de transferência!")
+        pyperclip.copy(texto_nota)
+        st.success("Nota copiada para a área de transferência!")
            
 else:
     st.warning("Preencha todos os campos obrigatórios e valide os dados antes de gerar a nota.")
