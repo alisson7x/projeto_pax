@@ -4,6 +4,7 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 import toml
 import os
+import pyperclip
 
 # Caminho para o arquivo secrets.toml na pasta gitignore
 secrets_path = os.path.join("streamlit", "secrets.toml")
@@ -66,27 +67,6 @@ else:
     if not dt_falec_valida:
         st.error("Data de falecimento inválida. Use o formato DD/MM/YYYY.")
 
-# Geração do texto
-if dt_nasc_valida and dt_falec_valida and nome and apelido and end_sepultamento:
-    texto_nota = f"""
-    🕊️ Nota de Falecimento 🕊️
-
-    É com profundo pesar que comunicamos o falecimento de {nome}, carinhosamente conhecido como {apelido}.\n
-
-    ✝️ Horário do Falecimento: {horario_falec.strftime('%H:%M')}\n
-    📆 Data de Nascimento: {dt_nasc.strftime('%d/%m/%Y')}\n
-    📆 Data de Falecimento: {dt_falec.strftime('%d/%m/%Y')}\n
-    🏡 Velório: {local_velorio}\n
-    ⚰️ Sepultamento: {end_sepultamento}\n
-    ⏰ Horário do Sepultamento: {horario_sepult.strftime('%H:%M')}\n
-
-    Rogamos a Deus que conforte o coração de familiares e amigos neste momento de dor. 🖤🙏\n
-    """
-
-    # Exibição do texto da nota
-    st.markdown("### Nota de Falecimento Gerada:")
-    st.code(texto_nota, language="markdown")
-
 # Função para salvar dados no Firestore
 def salvar_dados(nome, apelido, dt_nasc, dt_falec, horario_falec, end_sepultamento, horario_sepult, velorio, local_velorio=None):
     dados = {
@@ -112,3 +92,30 @@ if btn_confirmar:
         salvar_dados(nome, apelido, dt_nasc, dt_falec, horario_falec, end_sepultamento, horario_sepult, velorio, local_velorio)
     else:
         st.error("Por favor, preencha todos os campos obrigatórios corretamente!")
+
+# Geração do texto
+if dt_nasc_valida and dt_falec_valida and nome and apelido and end_sepultamento and btn_confirmar:
+    texto_nota = f"""
+🕊️ Nota de Falecimento 🕊️
+
+É com profundo pesar que comunicamos o falecimento de {nome}, carinhosamente conhecido como {apelido}.\n
+
+✝️ Horário do Falecimento: {horario_falec.strftime('%H:%M')}\n
+📆 Data de Nascimento: {dt_nasc.strftime('%d/%m/%Y')}\n
+📆 Data de Falecimento: {dt_falec.strftime('%d/%m/%Y')}\n
+🏡 Velório: {local_velorio}\n
+⚰️ Sepultamento: {end_sepultamento}\n
+⏰ Horário do Sepultamento: {horario_sepult.strftime('%H:%M')}\n
+
+Rogamos a Deus que conforte o coração de familiares e amigos neste momento de dor. 🖤🙏\n
+    """
+
+    # Exibição do texto da nota
+    st.markdown("### Nota de Falecimento Gerada:")
+    st.code(texto_nota, language="markdown")
+
+    # Botão de copiar dentro da seção de exibição do texto
+    if st.button("Copiar Nota"):
+        pyperclip.copy(texto_nota)
+        st.success("Nota copiada para área de transferência")
+
