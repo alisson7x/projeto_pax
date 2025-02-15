@@ -1,6 +1,5 @@
 import streamlit as st
 from datetime import datetime
-import clipboard
 
 # Configuração da página
 st.set_page_config(
@@ -78,9 +77,7 @@ if (
         st.success("Nota gerada com sucesso!")
         
         # Botão para copiar o texto para a área de transferência
-    if st.button("Copiar Nota"):
-        clipboard.copy(texto_nota)
-        st.success("Nota copiada para a área de transferência!")
-           
+        st.markdown(f'<button onclick="navigator.clipboard.writeText(`{texto_nota}`)">Copiar Nota</button>', unsafe_allow_html=True)
+       
 else:
     st.warning("Preencha todos os campos obrigatórios e valide os dados antes de gerar a nota.")
