@@ -84,6 +84,3 @@ if (
            
 else:
     st.warning("Preencha todos os campos obrigatórios e valide os dados antes de gerar a nota.")
-
-
-
