@@ -1,6 +1,7 @@
 import streamlit as st
 from datetime import datetime
 import clipboard
+import pyperclip
 
 # Configuração da página
 st.set_page_config(
@@ -79,7 +80,20 @@ if (
         
         # Botão para copiar o texto para a área de transferência
     if st.button("Copiar Nota"):
-        clipboard.copy(texto_nota)
+        clipboard.copy(f"""
+    🕊️ Nota de Falecimento 🕊️
+
+    É com profundo pesar que comunicamos o falecimento de {nome}, carinhosamente conhecido como {apelido}.\n
+
+    ✝️ Horário do Falecimento: {horario_falec.strftime('%H:%M')}\n
+    📆 Data de Nascimento: {dt_nasc.strftime('%d/%m/%Y')}\n
+    📆 Data de Falecimento: {dt_falec.strftime('%d/%m/%Y')}\n
+    🏡 Velório: {local_velorio}\n
+    ⚰️ Sepultamento: {end_sepultamento}\n
+    ⏰ Horário do Sepultamento: {horario_sepult.strftime('%H:%M')}\n
+
+    Rogamos a Deus que conforte o coração de familiares e amigos neste momento de dor. 🖤🙏
+    """)
         st.success("Nota copiada para a área de transferência!")
            
 else:
