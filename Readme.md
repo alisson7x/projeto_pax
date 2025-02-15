@@ -1,53 +1,70 @@
-# Funerária Pax Regional - Gerador de Nota de Falecimento
+#  Gerador de Notas de Falecimento
 
-Este é um aplicativo desenvolvido com **Streamlit** para gerar notas de falecimento de forma rápida e organizada.
+## ✨ Sobre o projeto
 
-## 📌 Funcionalidades
-- Interface amigável para preenchimento de dados.
-- Validação de datas para evitar erros.
-- Geração automática da nota de falecimento.
-- Opção para copiar a nota gerada para a área de transferência.
+Este projeto foi desenvolvido para auxiliar funerárias a gerarem notas de falecimento de forma rápida e eficiente. A aplicação foi criada utilizando **Streamlit**, permitindo uma interface intuitiva e de fácil uso.
 
-## 🛠️ Tecnologias Utilizadas
-- **Python** (linguagem principal)
-- **Streamlit** (para criação da interface)
-- **Pyperclip** (para funcionalidade de copiar texto)
+## 📚 Tecnologias Utilizadas
 
-## 🚀 Como Executar o Projeto
-### 1️⃣ Clone este repositório:
-```bash
- git clone https://github.com/seu-usuario/projeto-pax.git
- cd projeto-pax
-```
-### 2️⃣ Crie um ambiente virtual e instale as dependências:
-```bash
-python -m venv venv
-source venv/bin/activate  # No Windows use: venv\Scripts\activate
-pip install -r requirements.txt
-```
-### 3️⃣ Execute a aplicação:
-```bash
-streamlit run app.py
-```
+- **Python** – Linguagem principal do projeto.
+- **Streamlit** – Framework para criação da interface web.
+- **Datetime** – Biblioteca para manipulação de datas e horários.
+- **Streamlit Modal** – Para exibição de pop-ups de confirmação.
 
-## 📋 Campos do Formulário
-- **Nome completo**
-- **Apelido**
-- **Data de nascimento** (DD/MM/YYYY)
-- **Data de falecimento** (DD/MM/YYYY)
-- **Horário do falecimento**
-- **Endereço do sepultamento**
-- **Horário do sepultamento**
-- **Local do velório** (selecionável)
+## 🔧 Como Executar o Projeto
 
-## 🔍 Validações Implementadas
-- Impede que a data de falecimento seja anterior à data de nascimento.
-- Bloqueia datas de falecimento no futuro.
-- Alerta caso os campos não estejam preenchidos corretamente.
+1. **Clone o repositório**:
+   ```sh
+   git clone https://github.com/alisson7x/projeto_pax
+   ```
+2. **Acesse a pasta do projeto**:
+   ```sh
+   cd gerador-nota-falecimento
+   ```
+3. **Crie um ambiente virtual (opcional, mas recomendado)**:
+   ```sh
+   python -m venv venv
+   source venv/bin/activate  # Para Linux/macOS
+   venv\Scripts\activate  # Para Windows
+   ```
+4. **Instale as dependências**:
+   ```sh
+   pip install -r requirements.txt
+   ```
+5. **Execute a aplicação**:
+   ```sh
+   streamlit run app.py
+   ```
+6. **Acesse no navegador**:
+   O Streamlit abrirá automaticamente uma página no navegador. Se não abrir, acesse manualmente: [http://localhost:8501](http://localhost:8501)
 
-## 📌 Observação
-Se a funcionalidade de **copiar a nota** não funcionar em alguns ambientes, pode ser necessário copiar manualmente o texto gerado.
+## 🔍 Funcionalidades
+
+- Entrada de dados sobre o falecido (nome, apelido, datas, horários, endereço do sepultamento).
+- Validação automática das datas.
+- Geração de um texto padronizado para a nota de falecimento.
+- Modal para exibição e cópia manual da nota gerada.
+
+## 🛠 Melhorias Futuras
+
+- Botão de cópia automática do texto gerado.
+- Integração com um banco de dados para armazenar histórico de notas.
+- Opção para exportar a nota em PDF.
+
+## ✨ Contribuição
+
+Sinta-se à vontade para contribuir com melhorias! Basta seguir os passos:
+
+1. Fork o repositório.
+2. Crie uma nova branch: `git checkout -b minha-feature`
+3. Faça suas alterações e commite: `git commit -m "Adicionando nova funcionalidade"`
+4. Envie para o repositório remoto: `git push origin minha-feature`
+5. Abra um Pull Request.
+
+## 👥 Autor
+
+Criado por [www.linkedin.com/in/araujo-s](http://www.linkedin.com/in/araujo-s) – Entre em contato para feedbacks e colaborações!
 
 ---
-💡 *Desenvolvido para facilitar a elaboração de notas de falecimento com rapidez e precisão.*
 
+🔗 **Repositório no GitHub**: [https://github.com/alisson7x/projeto\_pax](https://github.com/alisson7x/projeto_pax)
