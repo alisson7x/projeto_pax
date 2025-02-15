@@ -1,6 +1,7 @@
 import streamlit as st
 from datetime import datetime
-
+from streamlit_modal import Modal
+import pyperclip
 # Configuração da página
 st.set_page_config(
     page_title="Funerária Pax Regional",
@@ -69,13 +70,14 @@ if (
     Rogamos a Deus que conforte o coração de familiares e amigos neste momento de dor. 🖤🙏
     """
     
-    # Exibição da nota
-    if st.button("Confirmar"):
-        st.success("Nota gerada com sucesso!")
-        
-        # Usando o expander para simular um modal
-        with st.expander("Clique aqui para ver a Nota de Falecimento"):
-            st.text_area("Nota de Falecimento:", texto_nota, height=300)
-            st.write("Copie a nota manualmente.")
+  
+    # Botão de confirmação
+    btn_confirmar = st.button("Confirmar")
+    if btn_confirmar:
+        modal = Modal("Dados confirmados", padding=11, max_width=680, key="PopUp")
+        with modal.container():
+            st.write(texto_nota)
+            pyperclip.copy(texto_nota)
+            st.success("Nota de falecimento copiada para a área de transferência!")
 else:
     st.warning("Preencha todos os campos obrigatórios e valide os dados antes de gerar a nota.")
