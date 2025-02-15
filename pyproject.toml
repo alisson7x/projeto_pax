@@ -15,6 +15,7 @@ pywhatkit = "^5.4"
 datetime = "^5.5"
 firebase-admin = "^6.6.0"
 clipboard = "^0.0.4"
+modal = "^0.73.51"
 
 
 [build-system]

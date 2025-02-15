@@ -71,13 +71,11 @@ if (
     
     # Exibição da nota
     if st.button("Confirmar"):
-        st.markdown("### Nota de Falecimento Gerada:")
-        st.divider()
-        st.write(texto_nota)
         st.success("Nota gerada com sucesso!")
         
-        # Botão para copiar o texto para a área de transferência
-        st.markdown(f'<button onclick="navigator.clipboard.writeText(`{texto_nota}`)">Copiar Nota</button>', unsafe_allow_html=True)
-       
+        # Usando o expander para simular um modal
+        with st.expander("Clique aqui para ver a Nota de Falecimento"):
+            st.text_area("Nota de Falecimento:", texto_nota, height=300)
+            st.write("Copie a nota manualmente.")
 else:
     st.warning("Preencha todos os campos obrigatórios e valide os dados antes de gerar a nota.")
