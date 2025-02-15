@@ -313,6 +313,19 @@ files = [
 colorama = {version = "*", markers = "platform_system == \"Windows\""}
 
 [[package]]
+name = "clipboard"
+version = "0.0.4"
+description = "A cross platform clipboard operation library of Python. Works for Windows, Mac and Linux."
+optional = false
+python-versions = "*"
+files = [
+    {file = "clipboard-0.0.4.tar.gz", hash = "sha256:a72a78e9c9bf68da1c3f29ee022417d13ec9e3824b511559fd2b702b1dd5b817"},
+]
+
+[package.dependencies]
+pyperclip = ">=1.3"
+
+[[package]]
 name = "colorama"
 version = "0.4.6"
 description = "Cross-platform colored terminal text."
@@ -2255,4 +2268,4 @@ testing = ["coverage[toml]", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "f0ef3d3b504a8571046463d898d38f5dee9bedfd3050d2a1d162f582f6df5c42"
+content-hash = "ead608bb865553db8c05b226b5afab101eee923dc27a48698a21ea14876cd57c"
